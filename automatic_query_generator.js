@@ -212,6 +212,8 @@ function executeQuery(query, mediaType, success) {
 	request(options, function(error, response, body) {
 		if (error) {
 			console.log(query + "could not be parsed!")
+		else if (response.statusCode != 200) {
+			console.log(JSON.stringify(response));
 		} else {
 			success(body);
 		}
@@ -311,7 +313,7 @@ function wrap(value) {
 }
 
 function addslashes(str) {
-	return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+	return str.replace(/"/g, '\\"');
 }
 
 function toBGPString(bgp, p, o) {
